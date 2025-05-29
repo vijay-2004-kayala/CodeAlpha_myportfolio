@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Get in Touch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    canvas#network-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -5;
+      width: 100%;
+      height: 100%;
+    }
+
+    .contact-container {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.1), 0 0 30px rgba(0, 255, 255, 0.2);
+      animation: floatEffect 6s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatEffect {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #00fff7;
+      text-shadow: 0 0 15px #00fff7;
+    }
+
+    .contact-container input,
+    .contact-container textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 10px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      resize: none;
+      box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .contact-container input:focus,
+    .contact-container textarea:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px #00fff7, 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .contact-container button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(145deg, #00fff7, #00c6ff);
+      border: none;
+      border-radius: 12px;
+      color: #1f1f1f;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+    }
+
+    .contact-container button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 255, 255, 0.6);
+    }
+
+    .social-links {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .social-links p {
+      margin-bottom: 10px;
+    }
+
+    .social-links a {
+      color: #00fff7;
+      margin: 0 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px #00fff7;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="network-bg"></canvas>
+  <div class="contact-container">
+    <h2>Get in Touch</h2>
+    <form action="#" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <div class="social-links">
+      <p>Contact me:</p>
+      <a href="mailto:kayalavijay26@email.com">kayalavijay26@email.com</a><br>
+      <a href="https://www.linkedin.com/in/hima-naga-mani-vijay-kayala-011b8a247?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">MYLinkedIn Profile</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script>
+  const canvas = document.getElementById('network-bg');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+  camera.position.z = 200;
+
+  const geometry = new THREE.BufferGeometry();
+  const vertices = [];
+  const particleCount = 150;
+  for (let i = 0; i < particleCount; i++) {
+    vertices.push((Math.random() - 0.5) * 400);
+    vertices.push((Math.random() - 0.5) * 400);
+    vertices.push((Math.random() - 0.5) * 400);
+  }
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+  const material = new THREE.PointsMaterial({
+    color: 0x00fff7,
+    size: 2.5,
+    transparent: true,
+    opacity: 0.8
+  });
+
+  const particles = new THREE.Points(geometry, material);
+  scene.add(particles);
+
+  // Create lines
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00c6ff, opacity: 0.3, transparent: true });
+  const lineGeometry = new THREE.BufferGeometry();
+  const maxConnections = 3;
+  const lineMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+  scene.add(lineMesh);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const positions = geometry.attributes.position.array;
+    const linePositions = [];
+    for (let i = 0; i < particleCount; i++) {
+      for (let j = i + 1; j < particleCount; j++) {
+        const ix = i * 3, jx = j * 3;
+        const dx = positions[ix] - positions[jx];
+        const dy = positions[ix + 1] - positions[jx + 1];
+        const dz = positions[ix + 2] - positions[jx + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (dist < 60) {
+          linePositions.push(positions[ix], positions[ix + 1], positions[ix + 2]);
+          linePositions.push(positions[jx], positions[jx + 1], positions[jx + 2]);
+        }
+      }
+    }
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+    lineGeometry.computeBoundingSphere();
+
+    particles.rotation.y += 0.001;
+    lineMesh.rotation.y += 0.001;
+
+    renderer.render(scene, camera);
+  }
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  animate();
+</script>
+
+
+</body>
+</html>
